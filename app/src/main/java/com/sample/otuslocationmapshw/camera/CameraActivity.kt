@@ -20,6 +20,7 @@ import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
+import androidx.camera.core.takePicture
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -67,9 +68,6 @@ class CameraActivity : AppCompatActivity() {
         sensorManager = getSystemService(SensorManager::class.java)
         tiltSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
 
-//        // TODO("Получить экземпляр SensorManager")
-//        // TODO("Добавить проверку на наличие датчика акселерометра и присвоить значение tiltSensor")
-//        tiltSensor = TODO("Get tilt sensor")
         cameraProviderFuture.addListener({
             cameraProvider = cameraProviderFuture.get()
         }, ContextCompat.getMainExecutor(this))
@@ -101,10 +99,6 @@ class CameraActivity : AppCompatActivity() {
         if (tiltSensor == null) return
         sensorManager.unregisterListener(sensorEventListener)
     }
-
-//     TODO("Подписаться на получение событий обновления датчика")
-//
-//     TODO("Остановить получение событий от датчика")
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -139,18 +133,9 @@ class CameraActivity : AppCompatActivity() {
             val filePath =
                 folderPath + SimpleDateFormat(FILENAME_FORMAT, Locale.getDefault()).format(Date())
 
-//            val imageCapture = ImageCapture.Metadata()
-//            imageCapture.location = location
-
-            // TODO("4. Добавить установку местоположения в метаданные фото")
             val outputFileOptions = ImageCapture.OutputFileOptions.Builder(File(filePath))
-//                .setMetadata(imageCapture)
                 .setMetadata(ImageCapture.Metadata().apply { this.location = location })
                 .build()
-
-            // TODO("Добавить вызов CameraX для фото")
-            // TODO("Вывести Toast о том, что фото успешно сохранено и закрыть текущее активити c указанием кода результата SUCCESS_RESULT_CODE")
-            // imageCapture...
 
             imageCapture.takePicture(
                 outputFileOptions,
@@ -179,7 +164,7 @@ class CameraActivity : AppCompatActivity() {
 
     @SuppressLint("MissingPermission")
     private fun getLastLocation(callback: (location: Location?) -> Unit) {
-        // TODO("Добавить получение местоположения от fusedLocationClient и передать результат в callback после получения")
+
         fusedLocationClient.getCurrentLocation(CurrentLocationRequest.Builder().build(), null)
             .addOnCompleteListener { callback.invoke(it.result) }
     }
@@ -221,9 +206,7 @@ class CameraActivity : AppCompatActivity() {
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private const val REQUEST_CODE_PERMISSIONS = 10
 
-        // TODO("Указать набор требуемых разрешений")
         private val REQUIRED_PERMISSIONS: Array<String> = mutableListOf<String>(
-            // TODO("Добавить требуемые разрешения")
             ACCESS_COARSE_LOCATION,
             ACCESS_FINE_LOCATION,
             CAMERA

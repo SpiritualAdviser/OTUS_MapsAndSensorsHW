@@ -31,7 +31,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         ActivityResultContracts.StartActivityForResult()
     ) {
         if (it.resultCode == CameraActivity.SUCCESS_RESULT_CODE) {
-            // TODO("Обновить точки на карте при получении результата от камеры")
             showPreviewsOnMap()
         }
     }
@@ -44,7 +43,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
-//         TODO("Вызвать инициализацию карты")
         mapFragment.getMapAsync(this)
     }
 
@@ -85,14 +83,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         inPreferredConfig = Bitmap.Config.ARGB_8888
                     }), 64, 64, false
             )
-            // TODO("Указать pinBitmap как иконку для маркера")
+
             map.addMarker(
                 MarkerOptions()
                     .position(point)
                     .icon(BitmapDescriptorFactory.fromBitmap(pinBitmap))
             )
-            // TODO("Передвинуть карту к местоположению последнего фото")
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 10f))
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(point, 15f))
         }
     }
 }
